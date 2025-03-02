@@ -1,0 +1,142 @@
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Butik Lagerstyring</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <button onclick="showSection('inventory')" class="nav-btn">Lager</button>
+        <button onclick="showSection('orders')" class="nav-btn">Bestillinger</button>
+        <button onclick="showSection('payments')" class="nav-btn">Betalinger</button>
+        <button onclick="showSection('statistics')" class="nav-btn">Statistik</button>
+        <button onclick="showSection('pos')" class="nav-btn">Kasse</button>
+        <button onclick="openHelp()" class="nav-btn help-btn">Hjælp</button>
+    </nav>
+
+    <main>
+        <section id="inventory" class="active">
+            <h2>Lagerstyring</h2>
+            <div class="search-box">
+                <input type="text" id="inventorySearch" placeholder="Søg i lageret...">
+            </div>
+            
+            <button onclick="showAddItemForm()" class="add-btn">+ Tilføj ny vare</button>
+            
+            <div id="inventoryList" class="list"></div>
+
+            <div id="addItemForm" class="modal hidden">
+                <div class="modal-content">
+                    <h3>Tilføj ny vare</h3>
+                    <input type="text" id="itemName" placeholder="Varenavn">
+                    <input type="number" id="itemQuantity" placeholder="Antal">
+                    <input type="text" id="itemCategory" placeholder="Kategori">
+                    <input type="number" id="itemPrice" placeholder="Pris">
+                    <div class="button-group">
+                        <button onclick="addItem()">Gem</button>
+                        <button onclick="hideAddItemForm()">Annuller</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="orders">
+            <h2>Bestillinger</h2>
+            <div class="search-box">
+                <input type="text" id="orderSearch" placeholder="Søg i bestillinger...">
+            </div>
+
+            <button onclick="showAddOrderForm()" class="add-btn">+ Opret ny bestilling</button>
+            
+            <div id="ordersList" class="list"></div>
+
+            <div id="addOrderForm" class="modal hidden">
+                <div class="modal-content">
+                    <h3>Opret ny bestilling</h3>
+                    <input type="text" id="customerName" placeholder="Kundenavn">
+                    <input type="text" id="orderItems" placeholder="Varer (kommasepareret)">
+                    <input type="text" id="orderDate" placeholder="Dato" onfocus="(this.type='date')">
+                    <div class="button-group">
+                        <button onclick="addOrder()">Gem</button>
+                        <button onclick="hideAddOrderForm()">Annuller</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="payments">
+            <h2>Betalinger</h2>
+            <div class="search-box">
+                <input type="text" id="paymentSearch" placeholder="Søg i betalinger...">
+            </div>
+            
+            <button onclick="showAddPaymentForm()" class="add-btn">+ Registrer ny betaling</button>
+            
+            <div id="paymentsList" class="list"></div>
+
+            <div id="addPaymentForm" class="modal">
+                <div class="modal-content">
+                    <h3>Registrer betaling</h3>
+                    <select id="paymentOrderId" placeholder="Vælg ordre"></select>
+                    <input type="number" id="paymentAmount" placeholder="Beløb">
+                    <select id="paymentMethod">
+                        <option value="card">Kort</option>
+                        <option value="cash">Kontant</option>
+                        <option value="mobilepay">MobilePay</option>
+                    </select>
+                    <div class="button-group">
+                        <button onclick="addPayment()">Gem</button>
+                        <button onclick="hideAddPaymentForm()">Annuller</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="statistics">
+            <h2>Statistik</h2>
+            <div class="stats-grid">
+                <div class="stats-card">
+                    <h3>Dagens salg</h3>
+                    <p id="todaySales">0 kr</p>
+                </div>
+                <div class="stats-card">
+                    <h3>Månedlig omsætning</h3>
+                    <p id="monthlyRevenue">0 kr</p>
+                </div>
+                <div class="stats-card">
+                    <h3>Mest solgte varer</h3>
+                    <ul id="topProducts"></ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="pos">
+            <h2>Kasse</h2>
+            <div class="pos-container">
+                <div class="pos-products">
+                    <div class="search-box">
+                        <input type="text" id="posSearch" placeholder="Søg varer...">
+                    </div>
+                    <div id="posProductList" class="product-grid"></div>
+                </div>
+                <div class="pos-cart">
+                    <h3>Indkøbskurv</h3>
+                    <div id="posCart" class="cart-items"></div>
+                    <div class="cart-total">
+                        <span>Total:</span>
+                        <span id="cartTotal">0.00 kr</span>
+                    </div>
+                    <div class="payment-methods">
+                        <button onclick="processPosPayment('card')" class="payment-btn card">Kort</button>
+                        <button onclick="processPosPayment('cash')" class="payment-btn cash">Kontant</button>
+                        <button onclick="processPosPayment('mobilepay')" class="payment-btn mobilepay">MobilePay</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
